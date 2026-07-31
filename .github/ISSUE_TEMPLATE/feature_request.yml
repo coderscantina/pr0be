@@ -1,0 +1,33 @@
+name: Feature request
+description: Suggest a new check, output format, or capability
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good candidates are new ways code can end up stranded on a single machine. Out of scope: fixing problems automatically (committing, pushing, `git init`) and anything that mutates a scanned repository — pr0be is read-only by contract.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem?
+      description: What code could be lost today that pr0be doesn't warn you about?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should pr0be do? A sketch of the output or flag helps.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: This does not require pr0be to modify any scanned repository
+          required: true

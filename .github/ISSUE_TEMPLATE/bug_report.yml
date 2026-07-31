@@ -1,0 +1,64 @@
+name: Bug report
+description: A finding pr0be got wrong, a crash, or anything not working as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. The most valuable bug report for this project is a repository state we get wrong — if you can give us the `git` commands that produce it, we can fix it the same day.
+  - type: input
+    id: version
+    attributes:
+      label: pr0be version
+      description: Output of `pr0be --version` (or the commit SHA you built).
+      placeholder: pr0be 0.1.0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: git-version
+    attributes:
+      label: git version
+      placeholder: git version 2.55.0
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did pr0be report, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Ideally the git commands that build the directory state, plus the pr0be invocation.
+      render: shell
+      placeholder: |
+        git init repo && cd repo
+        git commit --allow-empty -m init
+        pr0be . --no-color
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: Paste the relevant output. `pr0be --json` is especially helpful.
+      render: shell
+  - type: textarea
+    id: config
+    attributes:
+      label: Config
+      description: Your config file, if you use one.
+      render: toml

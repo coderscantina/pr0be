@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/coderscantina/pr0be/discussions
+    about: Open-ended questions, ideas, and technical discussions.
+  - name: Security report
+    url: https://github.com/coderscantina/pr0be/security/advisories/new
+    about: Report a vulnerability privately — never in a public issue.
+  - name: Coder's Cantina
+    url: https://www.coderscantina.com
+    about: The other things we build.

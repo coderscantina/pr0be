@@ -1,0 +1,30 @@
+[package]
+name = "pr0be"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74"
+description = "Sweeps your disk for code that exists nowhere else — uncommitted, unpushed, or not in git at all."
+authors = ["Michael Wallner <m.wallner@badsoft.net>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/coderscantina/pr0be"
+repository = "https://github.com/coderscantina/pr0be"
+documentation = "https://github.com/coderscantina/pr0be#readme"
+keywords = ["git", "backup", "cli", "repository", "scanner"]
+categories = ["command-line-utilities", "development-tools"]
+exclude = ["/.github", "/docs"]
+
+[[bin]]
+name = "pr0be"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+rayon = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+
+[profile.release]
+lto = true
+strip = true

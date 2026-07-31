@@ -1,0 +1,6 @@
+/target
+.DS_Store
+*.log
+
+# Local scan configuration
+/pr0be.toml

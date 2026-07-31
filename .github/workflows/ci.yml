@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+
+jobs:
+  test:
+    name: test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Format
+        run: cargo fmt --all --check
+      - name: Clippy
+        run: cargo clippy --all-targets
+      - name: Test
+        run: cargo test --all
+      - name: Smoke test
+        shell: bash
+        run: |
+          cargo build --release
+          git config --global user.email ci@example.com
+          git config --global user.name CI
+          tree="$RUNNER_TEMP/tree"
+          mkdir -p "$tree/loose" && echo '{}' > "$tree/loose/package.json"
+          git init -q "$tree/repo" && cd "$tree/repo" && echo a > a.txt
+          cd "$GITHUB_WORKSPACE"
+          # Two findings expected: a git-less project and a repo with no remote,
+          # so pr0be must exit 1 here.
+          if ./target/release/pr0be "$tree" --no-color; then
+            echo "expected exit code 1 for an at-risk tree"
+            exit 1
+          fi
+          # A tree with nothing in it must exit 0.
+          mkdir -p "$RUNNER_TEMP/empty"
+          ./target/release/pr0be "$RUNNER_TEMP/empty" --no-color
