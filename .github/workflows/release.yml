@@ -52,7 +52,7 @@ jobs:
           cp README.md LICENSE CHANGELOG.md "dist/$name/"
           tar -czf "dist/$name.tar.gz" -C dist "$name"
           shasum -a 256 "dist/$name.tar.gz" > "dist/$name.tar.gz.sha256"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: pr0be-${{ matrix.target }}
           path: dist/*.tar.gz*
